@@ -1,4 +1,4 @@
-Composer Template
+WP Theme Image
 =========================
 
-Template for easily making composer projects.
+Class for autogenerating HTML for WordPress theme image.
