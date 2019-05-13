@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use WaughJ\FileLoader\MissingFileException;
 use WaughJ\WPThemeImage\WPThemeImage;
 
 require_once( 'MockWordPress.php' );
@@ -17,6 +18,21 @@ class WPThemeImageTest extends TestCase
 	{
 		$image = new WPThemeImage( 'photo.jpg', [ 'directory' => 'img' ] );
 		$this->assertEquals( $image->getHTML(), '<img src="https://www.example.com/wp-content/themes/example/img/photo.jpg?m=' . filemtime( getcwd() . '/img/photo.jpg'  ) . '" alt="" />' );
+	}
+
+	public function testNonExistentFile()
+	{
+		$image = new WPThemeImage( 'jibber.jpg', [ 'directory' => 'img' ] );
+		$html = null;
+		try
+		{
+			$html = $image->getHTML();
+		}
+		catch ( MissingFileException $e )
+		{
+			$html = $e->getFallbackContent();
+		}
+		$this->assertEquals( $html, '<img src="https://www.example.com/wp-content/themes/example/img/jibber.jpg" alt="" />' );
 	}
 
 	public function testNoCache()
