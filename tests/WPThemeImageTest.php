@@ -27,13 +27,14 @@ class WPThemeImageTest extends TestCase
 
 	public function testWithExtraAttributes()
 	{
-		$image = new WPThemeImage( 'photo.jpg', [ 'directory' => 'img', 'class' => 'center-img portrait', 'width' => '320', 'height' => 320, 'alt' => 'Windmill Trails', 'srcset' => 'photo.jpg 320w, photo-2x.jpg 640w' ] );
-		$this->assertContains( ' src="https://www.example.com/wp-content/themes/example/img/photo.jpg?m=' . filemtime( getcwd() . '/img/photo.jpg'  ) . '"', $image->getHTML() );
-		$this->assertContains( ' width="320"', $image->getHTML() );
-		$this->assertContains( ' height="320"', $image->getHTML() );
-		$this->assertContains( ' class="center-img portrait"', $image->getHTML() );
-		$this->assertContains( ' alt="Windmill Trails"', $image->getHTML() );
-		$this->assertContains( ' srcset="https://www.example.com/wp-content/themes/example/img/photo.jpg?m=' . filemtime( getcwd() . '/img/photo.jpg'  ) . ' 320w, https://www.example.com/wp-content/themes/example/img/photo-2x.jpg?m=' . filemtime( getcwd() . '/img/photo-2x.jpg'  ) . ' 640w"', $image->getHTML() );
+		$image = new WPThemeImage( 'photo.jpg', [ 'directory' => 'img', 'id' => 'portrait-img', 'class' => 'center-img portrait', 'width' => '320', 'height' => 320, 'alt' => 'Windmill Trails', 'srcset' => 'photo.jpg 320w, photo-2x.jpg 640w' ] );
+		$this->assertStringContainsString( ' src="https://www.example.com/wp-content/themes/example/img/photo.jpg?m=' . filemtime( getcwd() . '/img/photo.jpg'  ) . '"', $image->getHTML() );
+		$this->assertStringContainsString( ' width="320"', $image->getHTML() );
+		$this->assertStringContainsString( ' height="320"', $image->getHTML() );
+		$this->assertStringContainsString( ' id="portrait-img"', $image->getHTML() );
+		$this->assertStringContainsString( ' class="center-img portrait"', $image->getHTML() );
+		$this->assertStringContainsString( ' alt="Windmill Trails"', $image->getHTML() );
+		$this->assertStringContainsString( ' srcset="https://www.example.com/wp-content/themes/example/img/photo.jpg?m=' . filemtime( getcwd() . '/img/photo.jpg'  ) . ' 320w, https://www.example.com/wp-content/themes/example/img/photo-2x.jpg?m=' . filemtime( getcwd() . '/img/photo-2x.jpg'  ) . ' 640w"', $image->getHTML() );
 	}
 
 	public function testSetDefault()
