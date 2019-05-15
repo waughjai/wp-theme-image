@@ -30,19 +30,19 @@
 
 	function get_stylesheet_directory_uri()
 	{
-		return 'https://www.example.com/wp-content/themes/example';
+		return 'https://www.example.com/wp-content/themes/example/tests';
 	}
 
 	function get_stylesheet_directory()
 	{
-		return getcwd();
+		return getcwd() . '/tests';
 	}
 
 	function wp_upload_dir()
 	{
 		return
 		[
-			'path' => getcwd(),
+			'path' => getcwd() . '/tests',
 			'url' => 'https://www.example.com/wp-content/uploads'
 		];
 	}

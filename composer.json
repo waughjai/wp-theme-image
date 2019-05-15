@@ -13,8 +13,8 @@
     "require": {
 		"php": ">=7.0",
         "waughj/directory": ">=0.3.1",
-        "waughj/file-loader": ">=0.5.2",
-        "waughj/html-image": ">=0.6.0"
+        "waughj/file-loader": ">=0.5.3",
+        "waughj/html-image": ">=0.7.0"
     },
     "require-dev": {
 		"phpunit/phpunit": "*"
