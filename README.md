@@ -26,6 +26,8 @@ Or you can globally set the default local directory with the static method setDe
     $image = new WPThemeImage( 'demo.png' );
     $image->print(); // Will now print <img src="http://localhost.com/wp-content/themes/blue/pictures/demo.png?m=4389109" alt=""> ( #s after m= will vary ).
 
+## Error Handling
+
 As a child o’ HTMLImage, WPThemeImage will throw an exception if it’s set to show versioning ( default ) & can’t find the file on the server. Read the HTMLImage documentation to learn mo’ ’bout this. WPThemeImage works the same way:
 
     try
