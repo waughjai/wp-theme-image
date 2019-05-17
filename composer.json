@@ -14,7 +14,7 @@
 		"php": ">=7.0",
         "waughj/directory": ">=0.3.1",
         "waughj/file-loader": ">=0.5.3",
-        "waughj/html-image": ">=0.8.0"
+        "waughj/html-image": ">=0.8.1"
     },
     "require-dev": {
 		"phpunit/phpunit": "*"

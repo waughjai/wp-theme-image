@@ -51,6 +51,33 @@ class WPThemeImageTest extends TestCase
 		$this->assertStringContainsString( ' srcset="https://www.example.com/wp-content/themes/example/tests/img/photo.jpg?m=' . filemtime( getcwd() . '/tests/img/photo.jpg'  ) . ' 320w, https://www.example.com/wp-content/themes/example/tests/img/photo-2x.jpg?m=' . filemtime( getcwd() . '/tests/img/photo-2x.jpg'  ) . ' 640w"', $image->getHTML() );
 	}
 
+	public function testPartialVersioning()
+	{
+		try
+		{
+			$image = new WPThemeImage( 'photo.jpg', [ 'directory' => 'img', 'srcset' => 'photo-320x240.jpg 320w, photo-800x400.jpg 800w, photo-2560x900.jpg 2560w' ] );
+		}
+		catch ( MissingFileException $e )
+		{
+			$image = $e->getFallbackContent();
+		}
+		$this->assertStringContainsString( ' src="https://www.example.com/wp-content/themes/example/tests/img/photo.jpg?m=', $image->getHTML() );
+		$this->assertStringContainsString( ' srcset="https://www.example.com/wp-content/themes/example/tests/img/photo-320x240.jpg?m=', $image->getHTML() );
+		$this->assertStringContainsString( 'https://www.example.com/wp-content/themes/example/tests/img/photo-2560x900.jpg 2560w"', $image->getHTML() );
+
+		try
+		{
+			$image = new WPThemeImage( 'missing.jpg', [ 'directory' => 'img', 'srcset' => 'photo-320x240.jpg 320w, photo-800x400.jpg 800w, photo-2560x900.jpg 2560w' ] );
+		}
+		catch ( MissingFileException $e )
+		{
+			$image = $e->getFallbackContent();
+		}
+		$this->assertStringContainsString( ' src="https://www.example.com/wp-content/themes/example/tests/img/missing.jpg"', $image->getHTML() );
+		$this->assertStringContainsString( ' srcset="https://www.example.com/wp-content/themes/example/tests/img/photo-320x240.jpg?m=', $image->getHTML() );
+		$this->assertStringContainsString( 'https://www.example.com/wp-content/themes/example/tests/img/photo-2560x900.jpg 2560w"', $image->getHTML() );
+	}
+
 	public function testSetDefault()
 	{
 		WPThemeImage::setDefaultSharedDirectory( 'img' );
