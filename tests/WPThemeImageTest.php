@@ -1,8 +1,9 @@
-<?php
 
+<?php
 use PHPUnit\Framework\TestCase;
 use WaughJ\FileLoader\MissingFileException;
 use WaughJ\WPThemeImage\WPThemeImage;
+use WaughJ\HTMLImage\MalformedSrcSetStringException;
 
 require_once( 'MockWordPress.php' );
 
@@ -37,8 +38,8 @@ class WPThemeImageTest extends TestCase
 	{
 		$image = new WPThemeImage( 'photo.jpg', [ 'directory' => 'img', 'show-version' => false ] );
 		$this->assertEquals( $image->getHTML(), '<img src="https://www.example.com/wp-content/themes/example/tests/img/photo.jpg" alt="" />' );
-	}
 
+	}
 	public function testWithExtraAttributes()
 	{
 		$image = new WPThemeImage( 'photo.jpg', [ 'directory' => 'img', 'id' => 'portrait-img', 'class' => 'center-img portrait', 'width' => '320', 'height' => 320, 'alt' => 'Windmill Trails', 'srcset' => 'photo.jpg 320w, photo-2x.jpg 640w' ] );
@@ -49,6 +50,12 @@ class WPThemeImageTest extends TestCase
 		$this->assertStringContainsString( ' class="center-img portrait"', $image->getHTML() );
 		$this->assertStringContainsString( ' alt="Windmill Trails"', $image->getHTML() );
 		$this->assertStringContainsString( ' srcset="https://www.example.com/wp-content/themes/example/tests/img/photo.jpg?m=' . filemtime( getcwd() . '/tests/img/photo.jpg'  ) . ' 320w, https://www.example.com/wp-content/themes/example/tests/img/photo-2x.jpg?m=' . filemtime( getcwd() . '/tests/img/photo-2x.jpg'  ) . ' 640w"', $image->getHTML() );
+	}
+
+	public function testMalformedSrcString()
+	{
+		$this->expectException( MalformedSrcSetStringException::class );
+		$image = new WPThemeImage( 'photo.jpg', [ 'directory' => 'img', 'id' => 'portrait-img', 'class' => 'center-img portrait', 'width' => '320', 'height' => 320, 'alt' => 'Windmill Trails', 'srcset' => 'photo.jpg 320w, photo-2x.jpg' ] );
 	}
 
 	public function testPartialVersioning()
