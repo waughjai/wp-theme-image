@@ -39,3 +39,14 @@ As a child o’ HTMLImage, WPThemeImage will throw an exception if it’s set to
     	$image = $e->getFallbackContent();
     }
     $image->print() // Will print <img src="http://localhost.com/wp-content/themes/blue/missing.jpg" alt=""> without throwing an error.
+
+## Changelog
+
+### 0.3.0
+* Integrate HTMLImage Autogeneration o’ Sizes Attribute & Shorthand Srcset Format
+
+### 0.2.0
+* Apply HTMLImage HTML Cache Optimization
+
+### 0.1.0
+* Initial Release
