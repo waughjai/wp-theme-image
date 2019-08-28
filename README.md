@@ -42,6 +42,9 @@ As a child o’ HTMLImage, WPThemeImage will throw an exception if it’s set to
 
 ## Changelog
 
+### 0.3.1
+* Add function for getting URL directory.
+
 ### 0.3.0
 * Integrate HTMLImage Autogeneration o’ Sizes Attribute & Shorthand Srcset Format
 

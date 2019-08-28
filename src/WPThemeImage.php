@@ -21,13 +21,19 @@ class WPThemeImage extends HTMLImage
 		self::$default_shared_directory = new Directory( $directory );
 	}
 
-	public static function getFileLoader( array $attributes ) : FileLoader
+	public static function getFileLoader( array $attributes = [] ) : FileLoader
 	{
 		if ( !isset( $attributes[ 'directory' ] ) || !$attributes[ 'directory' ] )
 		{
 			$attributes[ 'directory' ] = self::$default_shared_directory;
 		}
 		return new FileLoader([ 'directory-url' => get_stylesheet_directory_uri(), 'directory-server' => get_stylesheet_directory(), 'shared-directory' => $attributes[ 'directory' ] ]);
+	}
+
+	public static function getURLDirectory() : Directory
+	{
+		$file_loader = self::getFileLoader();
+		return new Directory([ $file_loader->getDirectoryURL(), $file_loader->getSharedDirectory() ]);
 	}
 
 	private static $default_shared_directory = null;
