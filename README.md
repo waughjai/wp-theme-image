@@ -42,7 +42,7 @@ As a child o’ HTMLImage, WPThemeImage will throw an exception if it’s set to
 
 ## Changelog
 
-### 0.3.1
+### 0.4.0
 * Add function for getting URL directory.
 
 ### 0.3.0
